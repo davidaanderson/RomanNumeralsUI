@@ -1,5 +1,42 @@
 extends layout
 
+block scripts
+    script(src="/javascripts/controller.js")
+    script(src="/javascripts/service.js")
+
 block content
-  h1= title
-  p Welcome to #{title}
+    .container-fluid(ng-controller="IndexController as vm")
+        .row
+            .col-xs-12.col-md-offset-2.col-md-8.col-lg-offset-4.col-lg-4
+                .panel.panel-default
+                    .panel-body
+                        form(name='vm.converterForm')
+                            .form-group
+                                input.form-control(
+                                    type='text',
+                                    name='romanNumeral',
+                                    placeholder='Roman Numeral',
+                                    ng-model='vm.romanNumeral',
+                                    ng-model-options='vm.textInputOptions'
+                                    ng-change='vm.onRomanNumeralChanged()',
+                                    ng-keypress='vm.onKeyPressed()')
+                            .form-group
+                                input.form-control(
+                                    type='text',
+                                    name='arabicInteger',
+                                    placeholder='Arabic Integer',
+                                    ng-model='vm.arabicInteger',
+                                    ng-model-options='vm.textInputOptions',
+                                    ng-change='vm.onArabicIntegerChanged()',
+                                    ng-keypress='vm.onKeyPressed()')
+                            .form-group
+                                input.btn.btn-sm.btn-success(
+                                    type='button',
+                                    ng-click='vm.reset()',
+                                    value='Reset')
+                    .panel-footer
+                        span.text-muted Roman Numeral Converter
+                        .pull-right
+                            span.fa.fa-circle-o-notch.fa-spin.text-primary(
+                                ng-show='vm.showSpinner'
+                            )
